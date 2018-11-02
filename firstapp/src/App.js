@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 // import './person/person.css';
 // import './App.css';
-import classes from './App.module.css';
+import styles from './App.module.css';
 import Person from './person/Person.js';
+
 class App extends Component {
 
   state = {
@@ -13,6 +14,10 @@ class App extends Component {
     ],
     otherState: 'joku muu value',
     showPersons: false
+  }
+
+  componentDidMount = () => {
+    console.log('App Component Props', this.props);
   }
 
   nimiChangedHandler = (event, id) => {
@@ -49,33 +54,28 @@ class App extends Component {
   }
 
   render() {
-
-
     let persons = null;
     let btnClass = '';
 
-    if(this.state.showPersons){
+    if (this.state.showPersons) {
       persons = (
         <div>
-        {this.state.persons.map((person, index) => {
-          return <Person
-          click={() =>   this.deletePersonHandler(index)}
-          nimi= {person.nimi}
-          id= { person.id}
-          key={person.id  }
-          changed={(event) => this.nimiChangedHandler(event, person.id)}
-
-
-          />
-        })}
-
+          { this.state.persons.map((person, index) => {
+            return (
+              <Person
+                click={() =>   this.deletePersonHandler(index)}
+                nimi={person.nimi}
+                id={person.id}
+                key={person.id  }
+                changed={(event) => this.nimiChangedHandler(event, person.id)}
+              />
+            );
+          })}
         </div>
       );
-
-
-
-      btnClass = classes.Red;
-            console.log('btnClass:',btnClass);
+btnClass= styles.Red;
+      //btnClass = classes.Red;
+console.log('btnClass:',btnClass,'styles.App:',styles.App);
     }
 
     const classes = [];
@@ -89,20 +89,20 @@ class App extends Component {
     }
 
 
+    console.log('Print Styles', styles);
+    console.log('Classes', classes);
 
     return (
-
-      <div className="App">
+      <div className={styles.App}>
       <h1>tekstiä</h1>
-      <p className =  {classes.join(' ')}>lisää tekstiä</p>
+      <p className={classes.join(' ')}>lisää tekstiä</p>
 
       <button
-className={classes.Red}
-      onClick={this.togglePersonsHandler}> 'Toggle Persons'
+        className={btnClass}
+        onClick={this.togglePersonsHandler}> 'Toggle Persons'
       </button>
       {persons}
       </div>
-
     );
 
   }
