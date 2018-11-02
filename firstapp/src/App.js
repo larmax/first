@@ -74,8 +74,8 @@ class App extends Component {
 
 
 
-
-
+      btnClass = classes.Red;
+            console.log('btnClass:',btnClass);
     }
 
     const classes = [];
@@ -97,7 +97,7 @@ class App extends Component {
       <p className =  {classes.join(' ')}>lisää tekstiä</p>
 
       <button
-className={classes.Red }{...console.log('btnClass:',classes.Red)}
+className={classes.Red}
       onClick={this.togglePersonsHandler}> 'Toggle Persons'
       </button>
       {persons}
