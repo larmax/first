@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 // import './person/person.css';
-import './App.css';
+// import './App.css';
+import classes from './App.module.css';
 import Person from './person/Person.js';
 class App extends Component {
 
@@ -51,6 +52,7 @@ class App extends Component {
 
 
     let persons = null;
+    let btnClass = '';
 
     if(this.state.showPersons){
       persons = (
@@ -69,6 +71,7 @@ class App extends Component {
 
         </div>
       );
+
 
 
 
@@ -94,7 +97,7 @@ class App extends Component {
       <p className =  {classes.join(' ')}>lisää tekstiä</p>
 
       <button
-
+className={classes.Red }{...console.log('btnClass:',classes.Red)}
       onClick={this.togglePersonsHandler}> 'Toggle Persons'
       </button>
       {persons}
