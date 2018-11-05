@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 // import './person/person.css';
 // import './App.css';
 import styles from './App.module.css';
-import Person from './person/Person.js';
+import Person from './person/Person';
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 
 class App extends Component {
 
@@ -14,10 +15,6 @@ class App extends Component {
     ],
     otherState: 'joku muu value',
     showPersons: false
-  }
-
-  componentDidMount = () => {
-    console.log('App Component Props', this.props);
   }
 
   nimiChangedHandler = (event, id) => {
@@ -42,7 +39,7 @@ class App extends Component {
   togglePersonsHandler = () => {
     const doesShow = this.state.showPersons;
     this.setState({showPersons: !doesShow});
-
+    console.log('ErrorBoundary',ErrorBoundary)
   }
 
   deletePersonHandler = (personIndex) => {
@@ -56,50 +53,48 @@ class App extends Component {
   render() {
     let persons = null;
     let btnClass = '';
-
     if (this.state.showPersons) {
+
       persons = (
         <div>
-          { this.state.persons.map((person, index) => {
-            return (
-              <Person
-                click={() =>   this.deletePersonHandler(index)}
-                nimi={person.nimi}
-                id={person.id}
-                key={person.id  }
-                changed={(event) => this.nimiChangedHandler(event, person.id)}
-              />
-            );
-          })}
+        { this.state.persons.map((person, index) => {
+          return <ErrorBoundary  key={ person.id  }>
+            <Person
+            click={() =>   this.deletePersonHandler(index)}
+            nimi={ person.nimi }
+            changed={(event) => this.nimiChangedHandler( event, person.id )}      />
+            </  ErrorBoundary >
+
+        })}
         </div>
       );
-btnClass= styles.Red;
+      btnClass= styles.Red;
       //btnClass = classes.Red;
-console.log('btnClass:',btnClass,'styles.App:',styles.App);
+      console.log('btnClass:',btnClass,'styles.App:',styles.App);
     }
 
-    const classes = [];
+    const assignedClasses = [];
     if (this.state.persons.length <= 2) {
-      classes.push('red');
-      console.log(classes);
+      assignedClasses.push(styles.red);
+      console.log(styles);
     }
     if (this.state.persons.length <= 1) {
-      classes.push('bold');
-      console.log(classes);
+      assignedClasses.push(styles.bold);
+      console.log(  assignedClasses);
     }
 
 
     console.log('Print Styles', styles);
-    console.log('Classes', classes);
+    console.log('assignedClasses',   assignedClasses);
 
     return (
       <div className={styles.App}>
       <h1>tekstiä</h1>
-      <p className={classes.join(' ')}>lisää tekstiä</p>
+      <p className={assignedClasses.join(' ')}>lisää tekstiä</p>
 
       <button
-        className={btnClass}
-        onClick={this.togglePersonsHandler}> 'Toggle Persons'
+      className={btnClass}
+      onClick={this.togglePersonsHandler}> Toggle Persons
       </button>
       {persons}
       </div>
