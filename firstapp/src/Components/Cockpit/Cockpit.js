@@ -1,12 +1,13 @@
 import React from 'react';
 import styles from './Cockpit.module.css';
+import Aux from '../../hoc/Aux';
 const cockpit = (props) => {
 
   const assignedClasses = [];
-  let btnClass = '';
+  let btnClass = styles.Button;
   if(props.showPersons){
 
-    btnClass = styles.Button;
+
     console.log('btnclass',    btnClass);
     if (props.showPersons) {
 
@@ -25,14 +26,14 @@ const cockpit = (props) => {
   }
 
   return(
-    <div>
+    <Aux>
     <h1>tekstiä</h1>
     <p className={assignedClasses.join(' ')}>lisää tekstiä</p>
 
     <button
     className={btnClass}
-    onClick={props.clicked}>Toggle Persons</button>
-    </div>
+    onClick={props.clicked}> Toggle Persons </button>
+    </Aux>
   )
 };
 export default cockpit;
