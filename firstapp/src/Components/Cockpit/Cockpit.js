@@ -26,14 +26,14 @@ const cockpit = (props) => {
   }
 
   return(
-    <Aux>
-    <h1>tekstiä</h1>
+    <>
+    <h1>tekstä</h1>
     <p className={assignedClasses.join(' ')}>lisää tekstiä</p>
 
     <button
     className={btnClass}
     onClick={props.clicked}> Toggle Persons </button>
-    </Aux>
+    </>
   )
 };
 export default cockpit;

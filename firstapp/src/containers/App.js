@@ -1,44 +1,46 @@
 import React, { PureComponent } from 'react';
 // import './person/person.css';
 // import './App.css';
+
 import styles from './App.module.css';
 import Persons from '../Components/persons/Persons';
 import Cockpit from '../Components/Cockpit/Cockpit'
+import WithClass from '../hoc/WithClass';
 // import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 
 class App extends PureComponent {
   constructor(props){
-  super(props);
-  console.log('[App.js] Inside constructor', props);
+    super(props);
+    console.log('[App.js] Inside constructor', props);
 
   }
   componentWillMount() {
-  console.log('[App.js] Inside componentWillMount ');
+    console.log('[App.js] Inside componentWillMount ');
 
   }
 
   componentDidMount(){
     console.log('[App.js] Inside componentWillMount ');
-}
+  }
 
-    componentWillReceiveProps(nextProps){
-      console.log('[UPDATE App.js] Inside componentWillReceiveProps, nextProps');
-    }
+  componentWillReceiveProps(nextProps){
+    console.log('[UPDATE App.js] Inside componentWillReceiveProps, nextProps');
+  }
 
-// shouldComponentUpdate(nextProps,nextState){
-//   console.log('[UPDATE App.js] Inside shouldComponentUpdate, nextProps');
-//   return nextState.persons !== this.state.persons
-//   || nextState.persons !== this.state.persons;
-// }
+  // shouldComponentUpdate(nextProps,nextState){
+  //   console.log('[UPDATE App.js] Inside shouldComponentUpdate, nextProps');
+  //   return nextState.persons !== this.state.persons
+  //   || nextState.persons !== this.state.persons;
+  // }
 
-componentWillUpdate(nextProps,nextState){
-  console.log('Inside componentWillUpdate, nextProps');
+  componentWillUpdate(nextProps,nextState){
+    console.log('Inside componentWillUpdate, nextProps');
 
-}
+  }
 
-componentDidUpdate(){
-  console.log('[UPDATE App.js] Inside ComponentDidUpdate ');
-}
+  componentDidUpdate(){
+    console.log('[UPDATE App.js] Inside ComponentDidUpdate ');
+  }
 
   state = {
     persons: [
@@ -47,7 +49,8 @@ componentDidUpdate(){
       { id:'3', nimi: 'kax' }
     ],
     otherState: 'joku muu value',
-    showPersons: false
+    showPersons: false,
+    timesClicked: 0
   }
 
   nimiChangedHandler = (event, id) => {
@@ -71,10 +74,14 @@ componentDidUpdate(){
 
   togglePersonsHandler = () => {
     let personsLength = this.state.persons.length
-      console.log('personsLength',personsLength);
+    console.log('personsLength',personsLength);
     if( personsLength > 0){
       const doesShow = this.state.showPersons;
-      this.setState({showPersons: !doesShow});
+      this.setState((prevState, props) => {
+        return{showPersons: !doesShow,
+          timesClicked: this.state.timesClicked +1
+        }
+      });
 
     }
 
@@ -109,7 +116,7 @@ componentDidUpdate(){
 
     return (
       <div className={styles.App}>
-            <button onClick={() => {this.setState({showPersons: true})}}{...console.log('showPersons',this.state.showPersons)}> Show Persons </button>
+      <button onClick={() => {this.setState({showPersons: true})}}{...console.log('showPersons',this.state.showPersons)}> Show Persons </button>
       <Cockpit
       appTitle={this.props.title}
       showPersons={this.state.showPersons}

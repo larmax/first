@@ -1,10 +1,12 @@
-import React, {Component} from 'react'
-import Person from './person/Person'
-class Persons extends Component{
-  constructor(props){
-  super(props);
-  console.log('[Persons.js] Inside constructor', props);
+import React, { PureComponent } from 'react'
 
+import Person from './person/Person'
+
+class Persons extends PureComponent{
+  constructor( props ){
+  super( props );
+  console.log('[Persons.js] Inside constructor', props);
+      this.lastPersonRef = React.createRef();
   }
   componentWillMount() {
   console.log('[Persons.js] Inside componentWillMount ');
@@ -13,6 +15,7 @@ class Persons extends Component{
 
   componentDidMount(){
     console.log('[Persons.js] Inside componentWillMount ');
+        this.lastPersonRef.current.focus();
 }
 
     componentWillReceiveProps(nextProps){
@@ -39,11 +42,11 @@ componentDidUpdate(){
   render(){
       console.log('[Persons.js] inside render');
   return this.props.persons.map( (person, index) => {
-
     return <Person
-
-      click={() =>   this.props.clicked(index)}
+      click={() =>   this.props.clicked( index )}
       nimi={ person.nimi }
+      sijainti = { index }
+      ref = { this.lastPersonRef }
       key={ person.id  }
       changed={( event ) => this.props.changed( event, person.id )}
         />
