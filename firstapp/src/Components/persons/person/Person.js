@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
 import withClass from '../../../hoc/WithClass'
 import styles from './Person.module.css';
+import { AuthContext } from '../../../containers/App'
 
 class Person extends Component {
   constructor(props){
@@ -24,19 +24,16 @@ this.inputElement = React.createRef();
 
   }
 focus(){
- this.inputElement.current.focus();       
+ this.inputElement.current.focus();
 }
 
   render(){
       console.log('[Person.js] inside render');
-// const rnd = Math.random();
-// console.log('rnd:', rnd);
-// if ( rnd > 0.7 ) {
-//   throw new Error ( 'Something went wrong' );
-// }
-
     return (
         <>
+        <AuthContext.Consumer>
+        {auth => auth ? <p>Authenticated!</p> : <p> :( </p> }
+          </AuthContext.Consumer>
             <p onClick={this.props.click}>I am {this.props.nimi} and I am {4} years old!</p>
             <p>{this.props.children}</p>
             <input

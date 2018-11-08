@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './Cockpit.module.css';
-import Aux from '../../hoc/Aux';
 const cockpit = (props) => {
 
   const assignedClasses = [];
@@ -27,13 +26,17 @@ const cockpit = (props) => {
 
   return(
     <>
-    <h1>tekstä</h1>
+    <h1>{props.appTitle }</h1>
     <p className={assignedClasses.join(' ')}>lisää tekstiä</p>
 
     <button
     className={btnClass}
     onClick={props.clicked}> Toggle Persons </button>
+    <button
+    onClick={props.login }>
+    Log In
+</button>
     </>
   )
 };
-export default cockpit;
+export default React.memo(cockpit);

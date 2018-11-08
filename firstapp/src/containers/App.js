@@ -8,6 +8,9 @@ import Cockpit from '../Components/Cockpit/Cockpit'
 import WithClass from '../hoc/WithClass';
 // import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 
+export const AuthContext = React.createContext(false);
+
+
 class App extends PureComponent {
   constructor(props){
     super(props);
@@ -34,8 +37,17 @@ class App extends PureComponent {
   // }
 
   componentWillUpdate(nextProps,nextState){
-    console.log('Inside componentWillUpdate, nextProps');
+    console.log('Inside componentWillUpdate', nextProps, nextState);
 
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState){
+  console.log('[UPDATE App.js] Inside getDerivedStateFromProps ', nextProps, prevState);
+return prevState;
+  }
+
+  getSnapshotBeforeUpdate(){
+    console.log('[UPDATE App.js] Inside   getSnapshotBeforeUpdate');
   }
 
   componentDidUpdate(){
@@ -50,7 +62,8 @@ class App extends PureComponent {
     ],
     otherState: 'joku muu value',
     showPersons: false,
-    timesClicked: 0
+    timesClicked: 0,
+    authenticated: false
   }
 
   nimiChangedHandler = (event, id) => {
@@ -70,6 +83,11 @@ class App extends PureComponent {
 
     this.setState( { persons: persons  } );
     console.log('id:',id);
+  }
+
+  loginHandler = () => {
+    this.setState({authenticated: true  })
+
   }
 
   togglePersonsHandler = () => {
@@ -103,9 +121,11 @@ class App extends PureComponent {
 
       persons = (
         <div>
-        <Persons persons = {this.state.persons}
+        <Persons
+        persons = {this.state.persons}
         clicked={this.deletePersonHandler}
         changed={this.nimiChangedHandler}
+
         />
         </div>
       );
@@ -122,8 +142,12 @@ class App extends PureComponent {
       showPersons={this.state.showPersons}
       persons={this.state.persons}
       clicked={this.togglePersonsHandler}
+      login={this.loginHandler}
       />
+      <AuthContext.Provider
+      value={this.state.authenticated}>
       {persons}
+      </AuthContext.Provider>
       </div>
     );
 
